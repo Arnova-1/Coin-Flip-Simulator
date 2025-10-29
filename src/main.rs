@@ -1,5 +1,6 @@
 use std::io;
 use std::io::Write;
+use rand::Rng;
 
 fn main() {
     println!("───────────────────────\n│ COIN FLIP SIMULATOR │\n───────────────────────\nSelect an action: \n[1] Flip the Coin \n[0] Exit");
@@ -25,11 +26,30 @@ fn main() {
         };
 
         match input {
-            0 | 1 => break,
+            0 => break,
+            1 => pick_side(),
             _ => {
                 println!("Enter a number between 0 and 1.");
                 continue;
             },
         };
+    }
+
+    fn pick_side() {
+        let random_side = random_side();
+        println!("Side: {:?}", random_side);
+    }
+}
+
+#[derive(Debug)]
+enum Side {
+    Head,
+    Tail,
+}
+
+fn random_side() -> Side {
+    match rand::rng().random_range(0..=100) {
+        1..50 => Side::Head,
+        _ => Side::Tail,
     }
 }
