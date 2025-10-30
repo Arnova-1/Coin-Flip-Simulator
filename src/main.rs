@@ -3,10 +3,10 @@ use std::io::Write;
 use rand::Rng;
 
 fn main() {
-    println!("───────────────────────\n│ COIN FLIP SIMULATOR │\n───────────────────────\nSelect an action: \n[1] Flip the Coin \n[0] Exit");
+    println!("───────────────────────\n│ COIN FLIP SIMULATOR │\n───────────────────────");
 
     loop {
-        print!("> ");
+        print!("Select an action: \n[1] Flip the Coin \n[0] Exit\n> ");
         io::stdout().flush().unwrap();
 
         let mut input = String::new();
@@ -37,16 +37,23 @@ fn main() {
 
     fn pick_side() {
         let random_side = random_side();
-        println!("Side: {:?}", random_side);
+        println!("\nThe coin landed on {}\n", random_side.as_str());
     }
 }
 
-#[derive(Debug)]
 enum Side {
     Head,
     Tail,
 }
 
+impl Side {
+    fn as_str(&self) -> &'static str {
+        match self {
+            Side::Head => "head",
+            Side::Tail => "tail",
+        }
+    }
+}
 fn random_side() -> Side {
     match rand::rng().random_range(0..=100) {
         1..50 => Side::Head,
